@@ -20,16 +20,36 @@ class App extends Component {
   };
 
   userInputHandler = (event) => {
-    
-  }
+    this.setState({
+      people: [
+        {
+          username: event.target.value,
+        },
+        {
+          username: event.target.value,
+        },
+        {
+          username: event.target.value,
+        },
+      ]
+    })
+  };
 
   render() {
     return (
       <div className="App">
-        <UserOutput username={this.state.people[0].username} />
-        <UserOutput username={this.state.people[1].username} />
-        <UserOutput username={this.state.people[2].username} />
-        <UserInput />
+        <div>
+          <UserOutput username={this.state.people[0].username} />
+          <UserInput changed={this.userInputHandler.bind(this)}/>
+        </div>
+        <div>
+          <UserOutput username={this.state.people[1].username} />
+          <UserInput changed={this.userInputHandler.bind(this)}/>
+        </div>
+        <div>
+          <UserOutput username={this.state.people[2].username} />
+          <UserInput changed={this.userInputHandler.bind(this)}/>
+        </div>
       </div>
     );
   }
