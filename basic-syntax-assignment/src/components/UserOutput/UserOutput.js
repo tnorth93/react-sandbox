@@ -4,7 +4,7 @@ const userOutput = (props) => {
 
   return (
     <div>
-      <p>dsdsd</p>
+      <p>{props.username}</p>
       <p>dsds</p>
     </div>
   )
