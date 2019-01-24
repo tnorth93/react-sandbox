@@ -18,26 +18,7 @@ class App extends Component {
     otherState: 'some other value',
     showPersons: false,
   };
-
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        {
-          name: newName,
-          age: 25,
-        },
-        {
-          name: 'Kelly',
-          age: 26,
-        },
-        {
-          name: 'Beans',
-          age: 21,
-        }
-      ]
-    })
-  };
-
+  
   nameChangedHandler = (event) => {
     this.setState({
       persons: [
