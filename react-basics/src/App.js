@@ -39,7 +39,10 @@ class App extends Component {
   };
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    // slice method called without args simply returns a new copy of the array
+    // const persons = this.state.persons.slice();
+    // this spread method is an ES6 addition that will do the same thing as slice, better practice to do it this way
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({persons: persons})
   };
