@@ -7,54 +7,46 @@ class App extends Component {
     persons: [
       { name: 'Tom',
         age: 25,
+        id: 'asfa1',
       },
       { name: 'Kelly',
         age: 26,
+        id: '45tr432',
       },
       { name: 'Beans',
         age: 3,
+        id: 'tg5t346',
       },
     ],
     otherState: 'some other value',
     showPersons: false,
   };
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        {
-          name: newName,
-          age: 25,
-        },
-        {
-          name: 'Kelly',
-          age: 26,
-        },
-        {
-          name: 'Beans',
-          age: 21,
-        }
-      ]
-    })
+  nameChangedHandler = ( event, id ) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    const person = {
+      // Again, this spread operator is making a copy of the object
+      ...this.state.persons[personIndex]
+    };
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState( { persons: persons} );
   };
 
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        {
-          name: 'Tom',
-          age: 25,
-        },
-        {
-          name: event.target.value,
-          age: 26,
-        },
-        {
-          name: 'Beans',
-          age: 21,
-        }
-      ]
-    })
+  deletePersonHandler = (personIndex) => {
+    // slice method called without args simply returns a new copy of the array
+    // const persons = this.state.persons.slice();
+    // this spread method is an ES6 addition that will do the same thing as slice, better practice to do it this way
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons})
   };
 
   togglePersonsHandler = () => {
@@ -77,17 +69,14 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age} > child </Person>
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            changed={this.nameChangedHandler}> second child </Person>
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-            click={this.switchNameHandler.bind(this, 'Tom!')} > third child </Person>
+          {this.state.persons.map((person, index) => {
+            return <Person
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              age={person.age}
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />
+          })}
         </div>
       )
     }
