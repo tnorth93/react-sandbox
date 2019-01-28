@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Validation from './components/validation';
+import Char from './components/char';
 
 class App extends Component {
   state = {
     inputText: '',
-    inputValidation: false,
   };
 
   textChangeHandler = (event) => {
@@ -17,6 +17,10 @@ class App extends Component {
   };
 
   render() {
+    const charList = this.state.inputText.split('').map(character => {
+      return <Char character={character}/>
+    });
+
     return (
       <div className="App">
         <input type='text'
@@ -24,6 +28,7 @@ class App extends Component {
                value={this.state.inputText} />
         <p>{this.state.inputText}</p>
         <Validation inputLength={this.state.inputText.length}/>
+        {charList}
       </div>
     );
   }
